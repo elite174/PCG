@@ -1,4 +1,3 @@
-from Word import WordList
 import random as rand
 
 
@@ -12,6 +11,8 @@ class Generator:
         length_5 = []
         length_6 = []
 
+        # Constructor for this class
+        # It receives type - iamb (2) or trochee(1)
         def __init__(self, type):
             self.length_1 = []
             self.length_2 = []
@@ -21,6 +22,8 @@ class Generator:
             self.length_6 = []
             self.type = type
 
+        # This function adds each word in word_list (WordList object)
+        # to
         def add(self, word_list):
             for i in word_list:
                 if len(i.representation) == 1:

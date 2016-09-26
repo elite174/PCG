@@ -2,6 +2,7 @@ from Word import WordList
 from Poetry import Generator
 
 
+# This function parses the Data File
 def init():
     file = open('base1.txt', 'r', encoding='utf-8')
     group_list = []
@@ -18,19 +19,13 @@ def init():
     return group_list
 
 
+# This function generates a poem with chosen verse size and syllable length
+# 1 - trochee
+# 2 - iamb
 def generate():
     groups = init()
     generator = Generator(groups)
-    print(generator.generate(8, 2))
+    print(generator.generate(9, 1))
 
-
-def check():
-    groups = init()
-    for i in groups:
-        print('type = ' + str(i.type))
-        for w in i.words:
-            print(w.word)
-            print(w.representation)
 
 generate()
-
