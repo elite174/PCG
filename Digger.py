@@ -11,6 +11,8 @@ class Digger:
     __stack = []
     __corridor_stack = []
 
+    # Constructor of the class
+    # It initializes the variables
     def __init__(self):
         self.__matrix = [0] * C.matrix_size
         for i in range(C.matrix_size):
@@ -20,6 +22,8 @@ class Digger:
         for i in range(C.min_length, C.max_length + 1):
             self.__length.append(i)
 
+    # This function checks whether it possible to place a room
+    # with given height and width at coordinate (i,j)
     def __can_place_room(self, i, j, height, width):
         if (i - int(height / 2)) < 1 or (j - int(width / 2) < 1) or (
                         i + int(height / 2) >= C.matrix_size - 1) or (j + int(width / 2) >= C.matrix_size - 1):
@@ -31,6 +35,8 @@ class Digger:
                     return False
         return flag
 
+    # This function checks whether it possible to place a corridor
+    # with given length and direction at coordinate (i,j)
     def __can_place_corridor(self, i, j, length, direction):
         if direction == 'U':
             while self.__matrix[i][j] == '#':
@@ -81,6 +87,8 @@ class Digger:
                 k += 1
             return True
 
+    # This function places (or deletes) a corridor
+    # with given length and direction at coordinate (i,j)
     def __place_corridor(self, i, j, length, direction, delete=False):
         if direction == 'U':
             while self.__matrix[i][j] == '#':
@@ -131,6 +139,7 @@ class Digger:
                 k += 1
             return [i, j]
 
+    # This function changes the matrix by replacing '0' to '#'
     def __correct_matrix(self):
         for item in self.__corridor_stack:
             self.__place_corridor(item[0], item[1], item[2], item[3], delete=True)
@@ -139,6 +148,7 @@ class Digger:
                 if self.__matrix[i][j] == '0':
                     self.__matrix[i][j] = '#'
 
+    # This function starts to generate the maze from the given position (i,j)
     def dig(self, i, j):
         flag1 = False
         flag2 = False
@@ -185,15 +195,20 @@ class Digger:
         # self.print_matrix()
         self.__show_maze()
 
+    # This function places a room
+    # with given height and width at coordinate (i,j)
     def __placeRoom(self, i, j, height, width):
         for y in range(i - int(height / 2), i + int(height / 2) + 1):
             for x in range(j - int(width / 2), j + int(width / 2) + 1):
                 self.__matrix[y][x] = '#'
 
+    # This is auxiliary function
+    # It prints the matrix to the screen
     def print_matrix(self):
         for i in range(C.matrix_size):
             print(''.join([x for x in self.__matrix[i]]))
 
+    # This function generates a picture (map) that based on the output matrix
     def __show_maze(self):
         img = Image.new('RGB', (C.matrix_size * C.pixel_size, C.matrix_size * C.pixel_size), (0, 0, 0))
         color = (255, 255, 255)

@@ -23,7 +23,7 @@ class Generator:
             self.type = type
 
         # This function adds each word in word_list (WordList object)
-        # to
+        # to appropriate length list
         def add(self, word_list):
             for i in word_list:
                 if len(i.representation) == 1:
@@ -39,6 +39,7 @@ class Generator:
                 elif len(i.representation) == 6:
                     self.length_6.append(i.word)
 
+        # This function checks whether ther is a word with geiven length
         def has_length(self, length):
             if length == 1:
                 if len(self.length_1) > 1:
@@ -71,6 +72,7 @@ class Generator:
                 else:
                     return False
 
+        # This function returns a word with given length
         def get_word(self, length):
             if length == 1:
                 word = self.length_1.pop(rand.randint(0, len(self.length_1) - 1))
@@ -95,6 +97,8 @@ class Generator:
     __type2_group = __Group(2)
     __groups = []
 
+    # Constructor for the class
+    # it receives list of WordList objects
     def __init__(self, groups):
         self.__groups = groups
         for word_list in self.__groups:
@@ -107,6 +111,7 @@ class Generator:
                 if word_list.words[0].get_length() == 1:
                     self.__type2_group.add(word_list.words)
 
+    # This function returns a rhyme to the given word
     def __get_rhyme(self, word):
         for group in self.__groups:
             for w in group.words:
@@ -116,6 +121,8 @@ class Generator:
                         rhyme = group.words[rand.randint(0, len(group.words) - 1)]
                     return rhyme
 
+    # This function deletes the word from the length group
+    # It receives a word, length of the word and type of the word
     def __delete_word(self, word, length, type):
         if type == 1:
             if length == 1:
@@ -170,6 +177,9 @@ class Generator:
                 self.__type2_group.length_6.remove(word)
                 return
 
+    # This function constructs a string
+    # It receives type of the string (iamb or trochee), length of the string and
+    # the last word of the previous string
     def __construct_string(self, type, length, last_word=''):
         end = ''
         if last_word != '':
@@ -202,6 +212,9 @@ class Generator:
         string += end
         return [string, last]
 
+    # This function generates a poem
+    # It receives length of the string (count of syllables) and
+    # type of the poem (iamb or trochee)
     def generate(self, count_of_syllables, type):
         text = ''
         for i in range(1):

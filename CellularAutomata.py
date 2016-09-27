@@ -8,6 +8,8 @@ class CellAutomata:
     __new_matrix = []
     __generations = 0
 
+    # Constructor for the class
+    # It receives number of generation than it needs to generate
     def __init__(self, generations):
         self.__generations = generations
         self.__matrix = [0] * C.matrix_size
@@ -17,11 +19,13 @@ class CellAutomata:
             self.__new_matrix[i] = ['#'] * C.matrix_size
         self.__fill_random()
 
+    # This function initializes new matrix
     def __init_new_matrix(self):
         self.__new_matrix = [0] * C.matrix_size
         for i in range(C.matrix_size):
             self.__new_matrix[i] = ['#'] * C.matrix_size
 
+    # This function fills the matrix with random noise
     def __fill_random(self):
         for i in range(1, C.matrix_size - 1):
             for j in range(1, C.matrix_size - 1):
@@ -29,6 +33,7 @@ class CellAutomata:
                 if number > 45:
                     self.__matrix[i][j] = '.'
 
+    # This function generates new generation for the matrix
     def __make(self):
         for i in range(1, C.matrix_size - 1):
             for j in range(1, C.matrix_size - 1):
@@ -36,6 +41,7 @@ class CellAutomata:
         self.__matrix = self.__new_matrix
         self.__init_new_matrix()
 
+    # This function return the number of walls around the cell at position (i,j)
     def __count_walls(self, i, j):
         count = 0
         for n in range(i - 1, i + 2):
@@ -44,6 +50,7 @@ class CellAutomata:
                     count += 1
         return count
 
+    # This function places a wall at position (i,j)
     def __place_wall(self, i, j):
         count = self.__count_walls(i, j)
         if self.__matrix == '#':
@@ -57,15 +64,19 @@ class CellAutomata:
             else:
                 return '.'
 
+    # This is auxiliary function
+    # It prints the matrix to the screen
     def print_matrix(self):
         for i in range(C.matrix_size):
             print(''.join([x for x in self.__matrix[i]]))
 
+    # This function generates cave
     def generate_cave(self):
         for i in range(self.__generations):
             self.__make()
         self.__show_matrix()
 
+    # This function generates a picture (map) that based on the output matrix
     def __show_matrix(self):
         img = Image.new('RGB', (C.matrix_size * C.pixel_size, C.matrix_size * C.pixel_size), (0, 0, 0))
         color = (255, 255, 255)
